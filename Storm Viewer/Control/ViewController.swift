@@ -11,15 +11,18 @@ import UIKit
 class ViewController: UITableViewController {
 
     var pictures = [String]()
-
+//    var images = [Data]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
+        title = "Storm Viewer"
+
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
+    
         
         for item in items {
             if item.hasPrefix("nssl") {
@@ -41,23 +44,6 @@ class ViewController: UITableViewController {
     
 }
 
-class PrintingViewController: UIViewController {
-    override func viewDidLoad() {
-//        super.viewDidLoad()
-        print("view has loaded")
-    }
-}
-
-class UserViewController: PrintingViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // do view setup here
-    }
-    
-    
-    
-}
 
 extension ViewController {
     
@@ -70,5 +56,14 @@ extension ViewController {
         cell.textLabel?.text = pictures[indexPath.row]
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let detailVC = storyBoard.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
+        print(pictures[indexPath.row])
+        detailVC.picture.image = UIImage(named: pictures[indexPath.row])
+//        detailVC.selectedImage = pictures[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
