@@ -10,18 +10,34 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var selectedImage : String!
+    var selectedImage : String! {
+        didSet{
+            print("%% detailVC's selectedImage get the value:\(selectedImage)")
+        }
+    }
     
     @IBOutlet weak var picture: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("$$ in DetialsVC's viewDidLoad")
         if let LoadInImage = selectedImage {
             picture.image = UIImage(named: selectedImage)
-            title = selectedImage
+            title = LoadInImage
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem:.action, target: self, action: #selector(shareTapped))
+            
         }
+        
     }
 
+    @objc func shareTapped() {
+        
+        let actVC = UIActivityViewController(activityItems: [picture.image!], applicationActivities: [])
+        actVC.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(actVC, animated: true, completion: nil)
+
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)

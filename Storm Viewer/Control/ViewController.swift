@@ -61,9 +61,15 @@ extension ViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let detailVC = storyBoard.instantiateViewController(withIdentifier: "DetailVC") as! DetailViewController
-        print(pictures[indexPath.row])
-        detailVC.picture.image = UIImage(named: pictures[indexPath.row])
-//        detailVC.selectedImage = pictures[indexPath.row]
+        print("$$ you tap the row: \(indexPath.row) : \(pictures[indexPath.row])")
+//        detailVC.picture.image = UIImage(named: pictures[indexPath.row])
+//        let detailImg = UIImage(named: pictures[indexPath.row])
+//        if let image = detailImg {
+//            print("$$ update detailVC")
+//            detailVC.picture.image = image
+//            //at this point, UIImageView picture is not loaded yet. a NIL
+//        }
+        detailVC.selectedImage = pictures[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }
